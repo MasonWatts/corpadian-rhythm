@@ -6,9 +6,26 @@ class SatisfactionGraph {
     constructor(canvasId) {
         this.canvas = document.getElementById(canvasId);
         this.ctx = this.canvas.getContext('2d');
+        
+        // High-DPI canvas setup for crisp text rendering
+        const dpr = window.devicePixelRatio || 1;
+        const displayWidth = this.canvas.getAttribute('width');
+        const displayHeight = this.canvas.getAttribute('height');
+        
+        // Store display dimensions for later reference
+        this.displayWidth = displayWidth;
+        this.displayHeight = displayHeight;
+        
+        this.canvas.width = displayWidth * dpr;
+        this.canvas.height = displayHeight * dpr;
+        this.canvas.style.width = displayWidth + 'px';
+        this.canvas.style.height = displayHeight + 'px';
+        
+        this.ctx.scale(dpr, dpr);
+        
         this.padding = 55;
-        this.height = this.canvas.height - this.padding * 2;
-        this.width = this.canvas.width - this.padding * 2;
+        this.height = displayHeight - this.padding * 2;
+        this.width = displayWidth - this.padding * 2;
         
         // Time window shown on screen (20 workdays total, centered on current time)
         this.visibleTimeWindowDays = 20;
@@ -19,7 +36,7 @@ class SatisfactionGraph {
     draw(simulation) {
         // Clear canvas
         this.ctx.fillStyle = '#ecf0f1';
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.fillRect(0, 0, this.displayWidth, this.displayHeight);
         
         // Draw axes
         this.drawAxes();
@@ -44,23 +61,23 @@ class SatisfactionGraph {
         // Y axis
         this.ctx.beginPath();
         this.ctx.moveTo(this.padding, this.padding);
-        this.ctx.lineTo(this.padding, this.canvas.height - this.padding);
+        this.ctx.lineTo(this.padding, this.displayHeight - this.padding);
         this.ctx.stroke();
         
         // X axis
         this.ctx.beginPath();
-        this.ctx.moveTo(this.padding, this.canvas.height - this.padding);
-        this.ctx.lineTo(this.canvas.width - this.padding, this.canvas.height - this.padding);
+        this.ctx.moveTo(this.padding, this.displayHeight - this.padding);
+        this.ctx.lineTo(this.displayWidth - this.padding, this.displayHeight - this.padding);
         this.ctx.stroke();
         
         // Labels
         this.ctx.fillStyle = '#333';
         this.ctx.font = '12px Courier New';
         this.ctx.textAlign = 'center';
-        this.ctx.fillText('Time (1 month)', this.canvas.width / 2, this.canvas.height - 10);
+        this.ctx.fillText('Time', this.displayWidth / 2, this.displayHeight - 10);
         
         this.ctx.save();
-        this.ctx.translate(15, this.canvas.height / 2);
+        this.ctx.translate(15, this.displayHeight / 2);
         this.ctx.rotate(-Math.PI / 2);
         this.ctx.fillText('Satisfaction', 0, 0);
         this.ctx.restore();
@@ -69,7 +86,7 @@ class SatisfactionGraph {
         this.ctx.textAlign = 'right';
         this.ctx.font = '11px Courier New';
         for (let i = 0; i <= 5; i++) {
-            const y = this.canvas.height - this.padding - (i * this.height / 5);
+            const y = this.displayHeight - this.padding - (i * this.height / 5);
             this.ctx.fillText((i * 20) + '%', this.padding - 10, y + 4);
         }
     }
@@ -81,10 +98,10 @@ class SatisfactionGraph {
         
         // Horizontal grid lines
         for (let i = 0; i <= 5; i++) {
-            const y = this.canvas.height - this.padding - (i * this.height / 5);
+            const y = this.displayHeight - this.padding - (i * this.height / 5);
             this.ctx.beginPath();
             this.ctx.moveTo(this.padding, y);
-            this.ctx.lineTo(this.canvas.width - this.padding, y);
+            this.ctx.lineTo(this.displayWidth - this.padding, y);
             this.ctx.stroke();
         }
         
@@ -138,11 +155,11 @@ class SatisfactionGraph {
             const x = this.padding + this.width / 2 + (offsetFromCurrent / this.visibleTimeWindowDays) * this.width;
             
             // Check if within visible range on screen
-            const isOnScreen = x > this.padding && x < this.canvas.width - this.padding;
+            const isOnScreen = x > this.padding && x < this.displayWidth - this.padding;
             
             if (isOnScreen) {
                 const normalizedValue = (history[i] - minValue) / range;
-                const y = this.canvas.height - this.padding - (normalizedValue * this.height);
+                const y = this.displayHeight - this.padding - (normalizedValue * this.height);
                 
                 currentSegment.push({ x, y });
                 
@@ -185,10 +202,10 @@ class SatisfactionGraph {
                 }
                 
                 // Draw down from last point
-                this.ctx.lineTo(segment[segment.length - 1].x, this.canvas.height - this.padding);
+                this.ctx.lineTo(segment[segment.length - 1].x, this.displayHeight - this.padding);
                 
                 // Draw along bottom axis
-                this.ctx.lineTo(segment[0].x, this.canvas.height - this.padding);
+                this.ctx.lineTo(segment[0].x, this.displayHeight - this.padding);
                 
                 // Close path back to start
                 this.ctx.closePath();
@@ -209,7 +226,7 @@ class SatisfactionGraph {
         
         const currentValue = simulation.calculateSatisfaction(simulation.currentTime).total;
         const normalizedValue = (currentValue - minValue) / range;
-        const y = this.canvas.height - this.padding - (normalizedValue * this.height);
+        const y = this.displayHeight - this.padding - (normalizedValue * this.height);
         
         // Draw indicator circle
         this.ctx.fillStyle = '#e74c3c';
@@ -228,7 +245,7 @@ class SatisfactionGraph {
         this.ctx.setLineDash([3, 3]);
         this.ctx.beginPath();
         this.ctx.moveTo(x, y);
-        this.ctx.lineTo(x, this.canvas.height - this.padding);
+        this.ctx.lineTo(x, this.displayHeight - this.padding);
         this.ctx.stroke();
         this.ctx.setLineDash([]);
     }
@@ -257,7 +274,7 @@ class SatisfactionGraph {
             const x = this.padding + this.width / 2 + (offsetFromCurrent / this.visibleTimeWindowDays) * this.width;
             
             // Only draw if within visible area
-            if (x > this.padding && x < this.canvas.width - this.padding) {
+            if (x > this.padding && x < this.displayWidth - this.padding) {
                 // Check if this is also a payday (every 20 days)
                 const isPayday = (fridayTime % 20) === 0;
                 
@@ -275,7 +292,7 @@ class SatisfactionGraph {
                 
                 this.ctx.beginPath();
                 this.ctx.moveTo(x, this.padding);
-                this.ctx.lineTo(x, this.canvas.height - this.padding);
+                this.ctx.lineTo(x, this.displayHeight - this.padding);
                 this.ctx.stroke();
                 
                 // Draw label below the x-axis
@@ -284,7 +301,7 @@ class SatisfactionGraph {
                 this.ctx.font = isPayday ? 'bold 10px Courier New' : '10px Courier New';
                 this.ctx.textAlign = 'center';
                 const labelText = isPayday ? 'Pay' : 'Fri';
-                this.ctx.fillText(labelText, x, this.canvas.height - this.padding + 15);
+                this.ctx.fillText(labelText, x, this.displayHeight - this.padding + 15);
             }
         }
         

@@ -6,8 +6,25 @@ class LinkageVisualizer {
     constructor(canvasId) {
         this.canvas = document.getElementById(canvasId);
         this.ctx = this.canvas.getContext('2d');
-        this.centerX = this.canvas.width / 2;
-        this.centerY = this.canvas.height / 2;
+        
+        // High-DPI canvas setup for crisp text rendering
+        const dpr = window.devicePixelRatio || 1;
+        const displayWidth = this.canvas.getAttribute('width');
+        const displayHeight = this.canvas.getAttribute('height');
+        
+        // Store display dimensions for later reference
+        this.displayWidth = displayWidth;
+        this.displayHeight = displayHeight;
+        
+        this.canvas.width = displayWidth * dpr;
+        this.canvas.height = displayHeight * dpr;
+        this.canvas.style.width = displayWidth + 'px';
+        this.canvas.style.height = displayHeight + 'px';
+        
+        this.ctx.scale(dpr, dpr);
+        
+        this.centerX = displayWidth / 2;
+        this.centerY = displayHeight / 2;
     }
     
     draw(simulation) {
@@ -15,7 +32,7 @@ class LinkageVisualizer {
         
         // Clear canvas
         this.ctx.fillStyle = '#fafafa';
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.fillRect(0, 0, this.displayWidth, this.displayHeight);
         
         // Draw grid
         this.drawGrid();
@@ -58,15 +75,15 @@ class LinkageVisualizer {
         this.drawJoint(this.centerX + positions.dayEnd.x, this.centerY + positions.dayEnd.y, '#2980b9', 5);
         
         // Draw end node
-        const satisfaction = simulation.calculateSatisfaction(simulation.currentTime);
-        const normalizedSat = satisfaction.normalized;
-        const nodeColor = this.getColorForValue(normalizedSat);
-        this.drawEndNode(
-            this.centerX + positions.dayEnd.x,
-            this.centerY + positions.dayEnd.y,
-            nodeColor,
-            normalizedSat
-        );
+        // const satisfaction = simulation.calculateSatisfaction(simulation.currentTime);
+        // const normalizedSat = satisfaction.normalized;
+        // const nodeColor = this.getColorForValue(normalizedSat);
+        // this.drawEndNode(
+        //     this.centerX + positions.dayEnd.x,
+        //     this.centerY + positions.dayEnd.y,
+        //     nodeColor,
+        //     normalizedSat
+        // );
         
         // Draw reference lines
         this.drawReferenceLine();
@@ -94,46 +111,23 @@ class LinkageVisualizer {
         this.ctx.stroke();
     }
     
-    drawEndNode(x, y, color, value) {
-        const radius = 12;
-        
-        // Background
-        this.ctx.fillStyle = color;
-        this.ctx.beginPath();
-        this.ctx.arc(x, y, radius, 0, Math.PI * 2);
-        this.ctx.fill();
-        
-        // Border
-        this.ctx.strokeStyle = '#333';
-        this.ctx.lineWidth = 2;
-        this.ctx.stroke();
-        
-        // Value display
-        const percentage = Math.round(value * 100);
-        this.ctx.fillStyle = '#333';
-        this.ctx.font = 'bold 12px Courier New';
-        this.ctx.textAlign = 'center';
-        this.ctx.textBaseline = 'middle';
-        this.ctx.fillText(percentage + '%', x, y);
-    }
-    
     drawGrid() {
         this.ctx.strokeStyle = '#e8e8e8';
         this.ctx.lineWidth = 1;
         
         const gridSize = 20;
         
-        for (let x = 0; x < this.canvas.width; x += gridSize) {
+        for (let x = 0; x < this.displayWidth; x += gridSize) {
             this.ctx.beginPath();
             this.ctx.moveTo(x, 0);
-            this.ctx.lineTo(x, this.canvas.height);
+            this.ctx.lineTo(x, this.displayHeight);
             this.ctx.stroke();
         }
         
-        for (let y = 0; y < this.canvas.height; y += gridSize) {
+        for (let y = 0; y < this.displayHeight; y += gridSize) {
             this.ctx.beginPath();
             this.ctx.moveTo(0, y);
-            this.ctx.lineTo(this.canvas.width, y);
+            this.ctx.lineTo(this.displayWidth, y);
             this.ctx.stroke();
         }
     }

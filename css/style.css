@@ -135,6 +135,7 @@ button:active {
     padding: 20px;
     background-color: #ffffff;
     border: 2px solid var(--border-color);
+    text-align: center;
 }
 
 #graphCanvas {
