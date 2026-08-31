@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corpadian Rhythm Visualization</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Corpadian Rhythm</h1>
+            <p class="subtitle">A visualization of corporate work satisfaction cycles</p>
+        </header>
+
+        <main>
+            <div class="visualization-section">
+                <div class="canvas-wrapper">
+                    <canvas id="linkageCanvas" width="600" height="600"></canvas>
+                </div>
+                <div class="controls">
+                    <button id="playPauseBtn">Play</button>
+                    <button id="resetBtn">Reset</button>
+                    <div class="speed-control">
+                        <label for="speedSlider">Speed:</label>
+                        <input type="range" id="speedSlider" min="0.1" max="5" step="0.1" value="1">
+                        <span id="speedValue">1.0x</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="graph-section">
+                <canvas id="graphCanvas" width="800" height="300"></canvas>
+                <p class="time-display">Time: <span id="timeDisplay">Day 1, 12:00 PM</span></p>
+            </div>
+
+            <div class="info-section">
+                <h2>About This Visualization</h2>
+                <p>
+                    The Corpadian Rhythm represents the cyclical patterns of workplace satisfaction:
+                </p>
+                <ul>
+                    <li><strong>Month Cycle (Red)</strong>: Longest arm, 1 full rotation per month. Payday is the high point.</li>
+                    <li><strong>Week Cycle (Green)</strong>: Medium arm, 4 rotations per month. Friday is the high point.</li>
+                    <li><strong>Day Cycle (Blue)</strong>: Shortest arm, end-of-day is the high point.</li>
+                </ul>
+                <p>
+                    The combined effect of these three cycles creates a complex waveform that shows when you'll feel most (and least) happy at work.
+                </p>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 Corpadian Rhythm. A creative project by Mason Watts.</p>
+        </footer>
+    </div>
+
+    <script src="js/simulation.js"></script>
+    <script src="js/visualization.js"></script>
+    <script src="js/graph.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

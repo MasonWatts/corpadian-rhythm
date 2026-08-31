@@ -1,0 +1,287 @@
+/* Corpadian Rhythm - Retro Minimalist Style */
+
+:root {
+    --bg-color: #f5f5f0;
+    --text-color: #1a1a1a;
+    --accent-color: #2c3e50;
+    --border-color: #333;
+    --link-color: #0066cc;
+    --month-color: #e74c3c;
+    --week-color: #27ae60;
+    --day-color: #3498db;
+    --graph-bg: #ecf0f1;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    font-size: 16px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    padding: 40px 20px;
+    border-bottom: 3px solid var(--border-color);
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.subtitle {
+    font-size: 1.1em;
+    color: var(--accent-color);
+    font-style: italic;
+}
+
+main {
+    margin-bottom: 40px;
+}
+
+/* Visualization Section */
+.visualization-section {
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.canvas-wrapper {
+    display: flex;
+    justify-content: center;
+    background-color: #ffffff;
+    border: 2px solid var(--border-color);
+    padding: 20px;
+}
+
+#linkageCanvas {
+    border: 1px solid #ccc;
+    background-color: #fafafa;
+    max-width: 100%;
+    height: auto;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    padding: 15px;
+    background-color: #ffffff;
+    border: 2px solid var(--border-color);
+}
+
+button {
+    padding: 10px 20px;
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    border: 2px solid var(--border-color);
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1em;
+}
+
+button:hover {
+    background-color: var(--link-color);
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+.speed-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#speedSlider {
+    width: 150px;
+}
+
+#speedValue {
+    min-width: 50px;
+    font-weight: bold;
+}
+
+/* Graph Section */
+.graph-section {
+    margin-bottom: 40px;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 2px solid var(--border-color);
+}
+
+#graphCanvas {
+    width: 100%;
+    height: auto;
+    background-color: var(--graph-bg);
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+}
+
+.time-display {
+    text-align: center;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+/* Info Section */
+.info-section {
+    padding: 30px;
+    background-color: #ffffff;
+    border: 2px solid var(--border-color);
+    margin-bottom: 40px;
+}
+
+.info-section h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.info-section p {
+    margin-bottom: 15px;
+}
+
+.info-section ul {
+    list-style: none;
+    margin-left: 20px;
+}
+
+.info-section li {
+    padding: 8px 0;
+    padding-left: 20px;
+    position: relative;
+}
+
+.info-section li:before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--link-color);
+    font-weight: bold;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    border-top: 3px solid var(--border-color);
+    font-size: 0.9em;
+    color: var(--accent-color);
+}
+
+/* Legend */
+.legend {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9em;
+}
+
+.legend-color {
+    width: 20px;
+    height: 3px;
+    border: 1px solid #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2em;
+    }
+
+    .canvas-wrapper {
+        padding: 10px;
+    }
+
+    #linkageCanvas {
+        width: 100%;
+        height: auto;
+    }
+
+    #graphCanvas {
+        width: 100%;
+        height: auto;
+    }
+
+    .controls {
+        flex-direction: column;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    .speed-control {
+        justify-content: space-between;
+    }
+
+    #speedSlider {
+        flex: 1;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+
+    header {
+        padding: 20px 10px;
+    }
+
+    header h1 {
+        font-size: 1.5em;
+        letter-spacing: 1px;
+    }
+
+    .subtitle {
+        font-size: 0.95em;
+    }
+
+    .info-section {
+        padding: 15px;
+    }
+
+    .legend {
+        gap: 15px;
+    }
+}
