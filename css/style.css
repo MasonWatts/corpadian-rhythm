@@ -172,7 +172,7 @@ button:active {
     align-items: center;
     gap: 10px;
     font-weight: bold;
-    cursor: pointer;
+    cursor: default;
 }
 
 .weight-label {
@@ -240,16 +240,6 @@ button:active {
     font-weight: bold;
     font-size: 1.1em;
     color: var(--accent-color);
-}
-
-#resetWeightsBtn {
-    background-color: #95a5a6;
-    padding: 8px 16px;
-    font-size: 0.9em;
-}
-
-#resetWeightsBtn:hover {
-    background-color: #7f8c8d;
 }
 
 /* Graph Section */
