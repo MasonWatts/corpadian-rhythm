@@ -60,6 +60,19 @@ main {
     margin-bottom: 40px;
 }
 
+.project-link {
+    color: var(--link-color);
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 0.95em;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.project-link:hover {
+    text-decoration: underline;
+}
+
 /* Visualization Section */
 .visualization-section {
     margin-bottom: 40px;
