@@ -14,11 +14,46 @@
         </header>
 
         <main>
-            <div class="visualization-section">
-                <div class="canvas-wrapper">
-                    <canvas id="linkageCanvas" width="600" height="600"></canvas>
+            <div class="cycle-weights-section">
+                <h3>Cycle Weights</h3>
+                <p class="weights-description">Adjust the relative importance of each cycle:</p>
+                <div class="weight-controls">
+                    <div class="weight-control">
+                        <label for="monthWeight">
+                            <span class="weight-label">Month Cycle</span>
+                            <span class="weight-color" style="background-color: #e74c3c;"></span>
+                        </label>
+                        <div class="weight-input-group">
+                            <input type="range" id="monthWeight" class="weight-slider" min="10" max="150" step="5" value="100">
+                            <span id="monthWeightValue" class="weight-value">100</span>
+                        </div>
+                    </div>
+
+                    <div class="weight-control">
+                        <label for="weekWeight">
+                            <span class="weight-label">Week Cycle</span>
+                            <span class="weight-color" style="background-color: #27ae60;"></span>
+                        </label>
+                        <div class="weight-input-group">
+                            <input type="range" id="weekWeight" class="weight-slider" min="10" max="150" step="5" value="70">
+                            <span id="weekWeightValue" class="weight-value">70</span>
+                        </div>
+                    </div>
+
+                    <div class="weight-control">
+                        <label for="dayWeight">
+                            <span class="weight-label">Day Cycle</span>
+                            <span class="weight-color" style="background-color: #3498db;"></span>
+                        </label>
+                        <div class="weight-input-group">
+                            <input type="range" id="dayWeight" class="weight-slider" min="10" max="150" step="5" value="50">
+                            <span id="dayWeightValue" class="weight-value">50</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="controls">
+                <button id="resetWeightsBtn">Reset to Defaults</button>
+            </div>
+            <div class="controls">
                     <button id="playPauseBtn">Play</button>
                     <button id="resetBtn">Reset</button>
                     <div class="speed-control">
@@ -27,13 +62,16 @@
                         <span id="speedValue">1.0x</span>
                     </div>
                 </div>
+            <div class="visualization-section">
+                <div class="canvas-wrapper">
+                    <canvas id="linkageCanvas" width="600" height="600"></canvas>
+                </div>
             </div>
 
             <div class="graph-section">
                 <canvas id="graphCanvas" width="800" height="300"></canvas>
                 <p class="time-display">Time: <span id="timeDisplay">Day 1 (Mon), 9:00 AM</span></p>
             </div>
-
             <div class="info-section">
                 <h2>About This Visualization</h2>
             </div>

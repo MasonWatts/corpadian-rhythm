@@ -174,4 +174,36 @@ class CorpadianSimulation {
     setSpeed(multiplier) {
         this.timeMultiplier = multiplier;
     }
+    
+    /**
+     * Set arm lengths (weights)
+     */
+    setArmLengths(monthLength, weekLength, dayLength) {
+        this.monthArmLength = monthLength;
+        this.weekArmLength = weekLength;
+        this.dayArmLength = dayLength;
+    }
+    
+    /**
+     * Set amplitudes (affects satisfaction calculation)
+     */
+    setAmplitudes(monthAmp, weekAmp, dayAmp) {
+        this.monthAmplitude = monthAmp;
+        this.weekAmplitude = weekAmp;
+        this.dayAmplitude = dayAmp;
+    }
+    
+    /**
+     * Get current arm configurations
+     */
+    getArmConfig() {
+        return {
+            monthLength: this.monthArmLength,
+            weekLength: this.weekArmLength,
+            dayLength: this.dayArmLength,
+            monthAmplitude: this.monthAmplitude,
+            weekAmplitude: this.weekAmplitude,
+            dayAmplitude: this.dayAmplitude
+        };
+    }
 }

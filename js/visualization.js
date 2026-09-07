@@ -74,17 +74,6 @@ class LinkageVisualizer {
         this.drawJoint(this.centerX + positions.weekEnd.x, this.centerY + positions.weekEnd.y, '#229954', 5);
         this.drawJoint(this.centerX + positions.dayEnd.x, this.centerY + positions.dayEnd.y, '#2980b9', 5);
         
-        // Draw end node
-        // const satisfaction = simulation.calculateSatisfaction(simulation.currentTime);
-        // const normalizedSat = satisfaction.normalized;
-        // const nodeColor = this.getColorForValue(normalizedSat);
-        // this.drawEndNode(
-        //     this.centerX + positions.dayEnd.x,
-        //     this.centerY + positions.dayEnd.y,
-        //     nodeColor,
-        //     normalizedSat
-        // );
-        
         // Draw reference lines
         this.drawReferenceLine();
     }
@@ -149,16 +138,5 @@ class LinkageVisualizer {
         this.ctx.stroke();
         
         this.ctx.setLineDash([]);
-    }
-    
-    getColorForValue(normalizedValue) {
-        // Red for low, yellow for medium, green for high
-        if (normalizedValue < 0.33) {
-            return '#e74c3c'; // Red
-        } else if (normalizedValue < 0.66) {
-            return '#f39c12'; // Orange
-        } else {
-            return '#27ae60'; // Green
-        }
     }
 }
